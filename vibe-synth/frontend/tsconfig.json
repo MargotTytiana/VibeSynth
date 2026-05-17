@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    // ── Target and module ──────────────────────────────────────────────────
+    // Target ES2022 to use native top-level await, class fields, and the
+    // Array.at() / Object.hasOwn() APIs without polyfills.
+    "target":           "ES2022",
+    "module":           "ESNext",
+    "moduleResolution": "bundler",   // Vite-native resolution (no .js extensions needed)
+    "useDefineForClassFields": true, // Align with the ECMAScript spec for class fields
+
+    // ── Library typings ────────────────────────────────────────────────────
+    // Include DOM, DOM.Iterable, and ES2022 for Web Audio, WebGPU, and
+    // modern JS builtins. @types/dom-webgpu supplements the WebGPU types
+    // (navigator.gpu, GPUDevice, GPUBuffer, etc.) not yet in TypeScript's
+    // built-in lib.
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["dom-webgpu"],         // from @types/dom-webgpu in package.json
+
+    // ── Strictness ─────────────────────────────────────────────────────────
+    "strict":                    true,
+    "noUncheckedIndexedAccess":  true,   // arr[n] returns T | undefined
+    "noImplicitOverride":        true,   // must use override keyword in subclasses
+    "exactOptionalPropertyTypes": true,  // distinguish missing vs undefined props
+    "noPropertyAccessFromIndexSignature": true,
+
+    // ── Output ─────────────────────────────────────────────────────────────
+    // Vite handles actual transpilation — tsc is only used for type checking
+    // (tsc --noEmit in the build script). No output directory needed.
+    "noEmit":  true,
+    "isolatedModules": true,   // required by Vite's esbuild transform
+
+    // ── Source maps and paths ──────────────────────────────────────────────
+    "sourceMap":      true,
+    "baseUrl":        ".",
+    "paths": {
+      "@api/*":  ["src/api/*"],
+      "@utils/*": ["src/utils/*"]
+    },
+
+    // ── Interop ────────────────────────────────────────────────────────────
+    "esModuleInterop":       false,   // not needed for ESM-only codebase
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // ── Skip type-checking of declaration files in node_modules ───────────
+    "skipLibCheck": true
+  },
+
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
