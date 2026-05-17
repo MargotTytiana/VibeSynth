@@ -35,7 +35,7 @@ anyio==4.7.0
 # ---------------------------------------------------------------------------
 # wasmtime is used by compiler/wasm_compiler.py to load and validate
 # WASM modules produced by the Faust-to-WASM toolchain.
-wasmtime==26.0.0
+wasmtime==27.0.1
 
 
 # ---------------------------------------------------------------------------
