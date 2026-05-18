@@ -1,0 +1,7 @@
+vibe,confidence,node_count,chain
+warm cabin reverb,0.823,2,lowpass_filter → reverb_room
+tape saturation overdrive,0.651,1,saturation_soft
+freezing empty cave reverb,0.712,2,filter_lp → reverb_room
+glitchy VHS scanline tears,0.134,0,
+soft dreamy blur,0.098,0,
+telephone band-pass for voice,0.756,1,filter_hp

@@ -1,0 +1,541 @@
+/* =============================================================================
+   File: frontend/src/styles.css
+   Purpose: Global stylesheet for Vibe-Synth. Defines CSS custom properties
+            (design tokens), base resets, layout, and component-scoped styles
+            for the header, panels, VibeInput, ParamPanel, and ShaderPreview
+            canvas. Supports automatic light and dark mode via prefers-color-scheme.
+   ============================================================================= */
+
+
+/* ---------------------------------------------------------------------------
+   Design tokens — light mode defaults
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Colour palette */
+  --vs-navy:         #1F3864;
+  --vs-teal:         #0F6E56;
+  --vs-teal-mid:     #1D9E75;
+  --vs-teal-light:   #E1F5EE;
+  --vs-blue-mid:     #378ADD;
+  --vs-blue-light:   #E6F1FB;
+  --vs-amber:        #EF9F27;
+  --vs-amber-light:  #FAEEDA;
+
+  /* Semantic colours */
+  --vs-color-bg:         #FAFAF8;
+  --vs-color-surface:    #FFFFFF;
+  --vs-color-surface-2:  #F4F3EE;
+  --vs-color-border:     rgba(0, 0, 0, 0.10);
+  --vs-color-border-mid: rgba(0, 0, 0, 0.18);
+  --vs-color-text:       #1A1A18;
+  --vs-color-muted:      #6B6B65;
+  --vs-color-hint:       #9B9B93;
+  --vs-color-error:      #B71C1C;
+  --vs-color-success:    #1B5E20;
+  --vs-color-info:       var(--vs-navy);
+
+  /* Typography */
+  --vs-font:       system-ui, "Segoe UI", Arial, sans-serif;
+  --vs-font-mono:  "Cascadia Code", "Fira Code", "Consolas", monospace;
+  --vs-size-sm:    0.8125rem;    /* 13px */
+  --vs-size-base:  0.9375rem;   /* 15px */
+  --vs-size-lg:    1.0625rem;   /* 17px */
+  --vs-size-xl:    1.25rem;     /* 20px */
+  --vs-size-2xl:   1.5rem;      /* 24px */
+  --vs-weight-normal: 400;
+  --vs-weight-mid:    500;
+  --vs-weight-bold:   600;
+
+  /* Spacing */
+  --vs-space-1:  0.25rem;
+  --vs-space-2:  0.5rem;
+  --vs-space-3:  0.75rem;
+  --vs-space-4:  1rem;
+  --vs-space-6:  1.5rem;
+  --vs-space-8:  2rem;
+  --vs-space-12: 3rem;
+
+  /* Radii */
+  --vs-radius-sm:  4px;
+  --vs-radius-md:  8px;
+  --vs-radius-lg:  12px;
+  --vs-radius-xl:  16px;
+
+  /* Shadows */
+  --vs-shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05);
+  --vs-shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+
+  /* Layout */
+  --vs-max-width:        1280px;
+  --vs-header-height:    56px;
+  --vs-panel-gap:        var(--vs-space-6);
+}
+
+
+/* ---------------------------------------------------------------------------
+   Dark mode overrides
+   --------------------------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --vs-color-bg:         #141412;
+    --vs-color-surface:    #1E1E1C;
+    --vs-color-surface-2:  #272724;
+    --vs-color-border:     rgba(255, 255, 255, 0.09);
+    --vs-color-border-mid: rgba(255, 255, 255, 0.16);
+    --vs-color-text:       #E8E6DC;
+    --vs-color-muted:      #9B9B93;
+    --vs-color-hint:       #6B6B65;
+    --vs-color-error:      #EF9A9A;
+    --vs-color-success:    #A5D6A7;
+    --vs-teal-light:       #0C2B22;
+    --vs-blue-light:       #0C1F30;
+    --vs-amber-light:      #2D1E04;
+    --vs-shadow-sm:        0 1px 3px rgba(0,0,0,0.3);
+    --vs-shadow-md:        0 4px 12px rgba(0,0,0,0.4);
+  }
+}
+
+
+/* ---------------------------------------------------------------------------
+   Base reset
+   --------------------------------------------------------------------------- */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin:  0;
+  padding: 0;
+}
+
+html {
+  font-size:               100%;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior:          smooth;
+}
+
+body {
+  font-family:      var(--vs-font);
+  font-size:        var(--vs-size-base);
+  font-weight:      var(--vs-weight-normal);
+  line-height:      1.6;
+  color:            var(--vs-color-text);
+  background-color: var(--vs-color-bg);
+  min-height:       100dvh;
+}
+
+a {
+  color:           var(--vs-blue-mid);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button { cursor: pointer; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--vs-color-border);
+}
+
+
+/* ---------------------------------------------------------------------------
+   Layout — header
+   --------------------------------------------------------------------------- */
+
+.vs-header {
+  position:         sticky;
+  top:              0;
+  z-index:          100;
+  height:           var(--vs-header-height);
+  background-color: var(--vs-color-surface);
+  border-bottom:    1px solid var(--vs-color-border);
+  box-shadow:       var(--vs-shadow-sm);
+}
+
+.vs-header-inner {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  max-width:       var(--vs-max-width);
+  margin:          0 auto;
+  padding:         0 var(--vs-space-6);
+  height:          100%;
+}
+
+.vs-logo {
+  display:     flex;
+  align-items: center;
+  gap:         var(--vs-space-2);
+  font-size:   var(--vs-size-lg);
+  font-weight: var(--vs-weight-bold);
+  color:       var(--vs-navy);
+}
+
+@media (prefers-color-scheme: dark) {
+  .vs-logo { color: #A8C4E8; }
+}
+
+.vs-nav { display: flex; gap: var(--vs-space-4); }
+
+.vs-nav-link {
+  font-size:   var(--vs-size-sm);
+  font-weight: var(--vs-weight-mid);
+  color:       var(--vs-color-muted);
+  padding:     var(--vs-space-1) var(--vs-space-2);
+  border-radius: var(--vs-radius-sm);
+  transition:  background 0.15s, color 0.15s;
+}
+.vs-nav-link:hover {
+  background-color: var(--vs-color-surface-2);
+  color:            var(--vs-color-text);
+  text-decoration:  none;
+}
+
+
+/* ---------------------------------------------------------------------------
+   Layout — main two-column grid
+   --------------------------------------------------------------------------- */
+
+.vs-main {
+  display:    grid;
+  grid-template-columns: 1fr 1fr;
+  gap:        var(--vs-panel-gap);
+  max-width:  var(--vs-max-width);
+  margin:     0 auto;
+  padding:    var(--vs-space-8) var(--vs-space-6);
+  min-height: calc(100dvh - var(--vs-header-height) - 48px);
+}
+
+@media (max-width: 900px) {
+  .vs-main { grid-template-columns: 1fr; }
+}
+
+
+/* ---------------------------------------------------------------------------
+   Panels
+   --------------------------------------------------------------------------- */
+
+.vs-panel {
+  background-color: var(--vs-color-surface);
+  border:           1px solid var(--vs-color-border);
+  border-radius:    var(--vs-radius-lg);
+  padding:          var(--vs-space-6);
+  box-shadow:       var(--vs-shadow-sm);
+}
+
+.vs-panel-title {
+  font-size:   var(--vs-size-xl);
+  font-weight: var(--vs-weight-bold);
+  color:       var(--vs-navy);
+  margin-bottom: var(--vs-space-2);
+}
+
+@media (prefers-color-scheme: dark) {
+  .vs-panel-title { color: #A8C4E8; }
+}
+
+.vs-panel-subtitle {
+  font-size:     var(--vs-size-sm);
+  color:         var(--vs-color-muted);
+  margin-bottom: var(--vs-space-4);
+  line-height:   1.5;
+}
+
+
+/* ---------------------------------------------------------------------------
+   VibeInput component styles
+   --------------------------------------------------------------------------- */
+
+.vibe-input-container { display: flex; flex-direction: column; gap: var(--vs-space-3); }
+
+.vibe-label {
+  font-size:   var(--vs-size-sm);
+  font-weight: var(--vs-weight-mid);
+  color:       var(--vs-color-muted);
+}
+
+.vibe-select {
+  width:            100%;
+  padding:          var(--vs-space-2) var(--vs-space-3);
+  border:           1px solid var(--vs-color-border-mid);
+  border-radius:    var(--vs-radius-md);
+  background-color: var(--vs-color-surface-2);
+  font-size:        var(--vs-size-sm);
+  appearance:       none;
+}
+.vibe-select:focus {
+  outline:       2px solid var(--vs-blue-mid);
+  outline-offset: 1px;
+}
+
+.vibe-textarea {
+  width:            100%;
+  padding:          var(--vs-space-3);
+  border:           1px solid var(--vs-color-border-mid);
+  border-radius:    var(--vs-radius-md);
+  background-color: var(--vs-color-surface-2);
+  font-size:        var(--vs-size-sm);
+  line-height:      1.6;
+  resize:           vertical;
+  min-height:       100px;
+  transition:       border-color 0.15s;
+}
+.vibe-textarea:focus {
+  outline:       none;
+  border-color:  var(--vs-blue-mid);
+  box-shadow:    0 0 0 3px rgba(55, 138, 221, 0.15);
+}
+
+.vibe-meta-row {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  font-size:       var(--vs-size-sm);
+  color:           var(--vs-color-hint);
+}
+
+.vibe-cache-indicator { font-weight: var(--vs-weight-mid); }
+
+.vibe-refresh-label {
+  display:     flex;
+  align-items: center;
+  gap:         var(--vs-space-2);
+  font-size:   var(--vs-size-sm);
+  cursor:      pointer;
+}
+
+.vibe-submit-btn {
+  width:            100%;
+  padding:          var(--vs-space-3) var(--vs-space-4);
+  background-color: var(--vs-navy);
+  color:            #FFFFFF;
+  border:           none;
+  border-radius:    var(--vs-radius-md);
+  font-size:        var(--vs-size-base);
+  font-weight:      var(--vs-weight-mid);
+  letter-spacing:   0.01em;
+  transition:       background 0.15s, opacity 0.15s;
+}
+.vibe-submit-btn:hover:not(:disabled) { background-color: #2E5499; }
+.vibe-submit-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.vibe-status {
+  font-size:  var(--vs-size-sm);
+  color:      var(--vs-color-muted);
+  min-height: 1.4em;
+  line-height: 1.4;
+}
+
+.vs-global-status {
+  font-size:     var(--vs-size-sm);
+  color:         var(--vs-color-muted);
+  margin-top:    var(--vs-space-3);
+  min-height:    1.4em;
+}
+
+
+/* ---------------------------------------------------------------------------
+   Output panel sub-sections
+   --------------------------------------------------------------------------- */
+
+.vs-output-section { margin-bottom: var(--vs-space-6); }
+.vs-output-section:last-child { margin-bottom: 0; }
+
+.vs-section-title {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--vs-space-2);
+  font-size:     var(--vs-size-lg);
+  font-weight:   var(--vs-weight-bold);
+  margin-bottom: var(--vs-space-4);
+  color:         var(--vs-color-text);
+}
+
+.vs-section-badge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       2px 8px;
+  border-radius: var(--vs-radius-sm);
+  font-size:     0.7rem;
+  font-weight:   var(--vs-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.vs-section-badge--dsp    { background-color: var(--vs-teal-light); color: var(--vs-teal); }
+.vs-section-badge--shader { background-color: var(--vs-blue-light); color: var(--vs-navy); }
+
+.vs-divider { margin: var(--vs-space-6) 0; }
+
+.vs-audio-controls {
+  display: flex;
+  gap:     var(--vs-space-3);
+  margin-bottom: var(--vs-space-4);
+}
+
+
+/* ---------------------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------------------- */
+
+.vs-btn {
+  padding:       var(--vs-space-2) var(--vs-space-4);
+  border:        none;
+  border-radius: var(--vs-radius-md);
+  font-size:     var(--vs-size-sm);
+  font-weight:   var(--vs-weight-mid);
+  transition:    background 0.15s, opacity 0.15s;
+}
+.vs-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.vs-btn--primary {
+  background-color: var(--vs-teal-mid);
+  color:            #FFFFFF;
+}
+.vs-btn--primary:hover:not(:disabled) { background-color: var(--vs-teal); }
+
+.vs-btn--secondary {
+  background-color: var(--vs-color-surface-2);
+  color:            var(--vs-color-text);
+  border:           1px solid var(--vs-color-border-mid);
+}
+.vs-btn--secondary:hover:not(:disabled) { background-color: var(--vs-color-border); }
+
+
+/* ---------------------------------------------------------------------------
+   Shader canvas
+   --------------------------------------------------------------------------- */
+
+.vs-canvas {
+  display:       block;
+  width:         100%;
+  aspect-ratio:  16 / 9;
+  border-radius: var(--vs-radius-md);
+  background-color: #000;
+  border:        1px solid var(--vs-color-border);
+  margin-bottom: var(--vs-space-4);
+}
+
+
+/* ---------------------------------------------------------------------------
+   ParamPanel component styles
+   --------------------------------------------------------------------------- */
+
+.param-panel-empty {
+  font-size:  var(--vs-size-sm);
+  color:      var(--vs-color-hint);
+  font-style: italic;
+  padding:    var(--vs-space-4) 0;
+}
+
+.param-panel-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   var(--vs-space-4);
+}
+
+.param-panel-title {
+  font-size:   var(--vs-size-base);
+  font-weight: var(--vs-weight-bold);
+  color:       var(--vs-color-text);
+}
+
+.param-reset-all-btn {
+  font-size:        var(--vs-size-sm);
+  padding:          var(--vs-space-1) var(--vs-space-3);
+  background-color: var(--vs-color-surface-2);
+  border:           1px solid var(--vs-color-border-mid);
+  border-radius:    var(--vs-radius-sm);
+  color:            var(--vs-color-muted);
+  transition:       background 0.15s;
+}
+.param-reset-all-btn:hover { background-color: var(--vs-color-border); }
+
+.param-controls { display: flex; flex-direction: column; gap: var(--vs-space-3); }
+
+.param-row { display: flex; flex-direction: column; gap: var(--vs-space-1); }
+
+.param-label-row {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     baseline;
+}
+
+.param-label {
+  font-size:   var(--vs-size-sm);
+  font-weight: var(--vs-weight-mid);
+  color:       var(--vs-color-muted);
+}
+
+.param-value {
+  font-size:   var(--vs-size-sm);
+  font-family: var(--vs-font-mono);
+  color:       var(--vs-color-hint);
+  min-width:   56px;
+  text-align:  right;
+}
+
+.param-slider,
+.param-knob {
+  width:         100%;
+  accent-color:  var(--vs-teal-mid);
+  cursor:        pointer;
+  height:        4px;
+}
+
+.param-toggle-row {
+  flex-direction: row;
+  align-items:    center;
+  justify-content: space-between;
+}
+
+.param-dropdown {
+  width:            100%;
+  padding:          var(--vs-space-1) var(--vs-space-2);
+  border:           1px solid var(--vs-color-border-mid);
+  border-radius:    var(--vs-radius-sm);
+  background-color: var(--vs-color-surface-2);
+  font-size:        var(--vs-size-sm);
+}
+
+
+/* ---------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------- */
+
+.vs-footer {
+  text-align:    center;
+  padding:       var(--vs-space-4) var(--vs-space-6);
+  font-size:     var(--vs-size-sm);
+  color:         var(--vs-color-hint);
+  border-top:    1px solid var(--vs-color-border);
+  background-color: var(--vs-color-surface);
+}
+
+.vs-footer a { color: var(--vs-color-muted); }
+.vs-footer a:hover { color: var(--vs-color-text); }
+
+
+/* ---------------------------------------------------------------------------
+   Utility classes
+   --------------------------------------------------------------------------- */
+
+.sr-only {
+  position:  absolute;
+  width:     1px;
+  height:    1px;
+  padding:   0;
+  margin:    -1px;
+  overflow:  hidden;
+  clip:      rect(0, 0, 0, 0);
+  border:    0;
+}
+
+.vs-text-muted { color: var(--vs-color-muted); }
+.vs-text-error { color: var(--vs-color-error); }
+.vs-text-mono  { font-family: var(--vs-font-mono); }

@@ -1,0 +1,61 @@
+vibe,threshold,hit,gen_type
+warm cabin reverb,0.5,True,dsp
+warm cabin reverb,0.6,True,dsp
+warm cabin reverb,0.7,True,dsp
+warm cabin reverb,0.75,True,dsp
+warm cabin reverb,0.8,False,dsp
+warm cabin reverb,0.85,True,dsp
+warm cabin reverb,0.9,False,dsp
+warm cabin reverb,0.92,True,dsp
+warm cabin reverb,0.95,False,dsp
+warm cabin reverb,0.98,False,dsp
+tape saturation,0.5,True,dsp
+tape saturation,0.6,True,dsp
+tape saturation,0.7,False,dsp
+tape saturation,0.75,True,dsp
+tape saturation,0.8,True,dsp
+tape saturation,0.85,False,dsp
+tape saturation,0.9,True,dsp
+tape saturation,0.92,False,dsp
+tape saturation,0.95,True,dsp
+tape saturation,0.98,False,dsp
+freezing cave reverb,0.5,True,dsp
+freezing cave reverb,0.6,True,dsp
+freezing cave reverb,0.7,False,dsp
+freezing cave reverb,0.75,True,dsp
+freezing cave reverb,0.8,False,dsp
+freezing cave reverb,0.85,True,dsp
+freezing cave reverb,0.9,True,dsp
+freezing cave reverb,0.92,False,dsp
+freezing cave reverb,0.95,False,dsp
+freezing cave reverb,0.98,False,dsp
+glitchy VHS tears,0.5,True,dsp
+glitchy VHS tears,0.6,True,dsp
+glitchy VHS tears,0.7,True,dsp
+glitchy VHS tears,0.75,True,dsp
+glitchy VHS tears,0.8,True,dsp
+glitchy VHS tears,0.85,False,dsp
+glitchy VHS tears,0.9,True,dsp
+glitchy VHS tears,0.92,True,dsp
+glitchy VHS tears,0.95,False,dsp
+glitchy VHS tears,0.98,False,dsp
+soft blur,0.5,True,dsp
+soft blur,0.6,True,dsp
+soft blur,0.7,False,dsp
+soft blur,0.75,True,dsp
+soft blur,0.8,True,dsp
+soft blur,0.85,True,dsp
+soft blur,0.9,False,dsp
+soft blur,0.92,False,dsp
+soft blur,0.95,False,dsp
+soft blur,0.98,True,dsp
+telephone band-pass,0.5,True,dsp
+telephone band-pass,0.6,True,dsp
+telephone band-pass,0.7,True,dsp
+telephone band-pass,0.75,True,dsp
+telephone band-pass,0.8,False,dsp
+telephone band-pass,0.85,False,dsp
+telephone band-pass,0.9,True,dsp
+telephone band-pass,0.92,False,dsp
+telephone band-pass,0.95,False,dsp
+telephone band-pass,0.98,False,dsp

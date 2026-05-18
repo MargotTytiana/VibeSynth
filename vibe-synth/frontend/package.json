@@ -1,0 +1,36 @@
+{
+  "name": "vibe-synth-frontend",
+  "version": "0.1.0",
+  "description": "Frontend for Vibe-Synth — real-time LLM-powered DSP and shader synthesis",
+  "private": true,
+  "type": "module",
+
+  "scripts": {
+    "dev":     "vite --host",
+    "build":   "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint":    "eslint src --ext .ts --report-unused-disable-directives --max-warnings 0"
+  },
+
+  "devDependencies": {
+    "@types/dom-webgpu":       "^0.1.32",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser":        "^7.18.0",
+    "eslint":                  "^9.9.0",
+    "typescript":              "^5.5.3",
+    "vite":                    "^5.4.1"
+  },
+
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Edge versions",
+    "last 2 Firefox versions",
+    "last 2 Safari versions"
+  ],
+
+  "engines": {
+    "node": ">=20.0.0",
+    "npm":  ">=10.0.0"
+  }
+}
