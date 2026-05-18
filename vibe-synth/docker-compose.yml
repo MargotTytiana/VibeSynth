@@ -6,7 +6,7 @@
 #          Run with: docker compose up --build
 # =============================================================================
 
-version: "3.9"
+# version: "3.9"
 
 # ---------------------------------------------------------------------------
 # Shared environment — loaded from .env at the project root.
