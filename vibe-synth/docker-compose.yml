@@ -20,7 +20,7 @@ services:
   # --------------------------------------------------------------------------
   backend:
     build:
-      context: ./backend
+      context: .
       dockerfile: Dockerfile
       target: runtime           # use the lean runtime stage, not the builder
     image: vibe-synth-backend:dev

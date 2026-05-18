@@ -64,10 +64,10 @@ COPY --from=builder /opt/venv /opt/venv
 WORKDIR /app
 
 # Copy application source
-COPY app/       ./app/
-COPY compiler/  ./compiler/
-COPY generation/ ./generation/
-COPY cache/     ./cache/
+COPY backend/app/       ./app/
+COPY compiler/          ./compiler/
+COPY generation/        ./generation/
+COPY cache/             ./cache/
 
 # Create a non-root user and hand over ownership
 RUN useradd --no-create-home --shell /bin/false vibesynth \
